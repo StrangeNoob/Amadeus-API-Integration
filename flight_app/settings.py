@@ -27,10 +27,12 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
+# Define the allowed hosts
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
 
 # Application definition
 
+# Define the installed apps
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -126,11 +128,14 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Define the Amadeus API settings
 AMADEUS_CLIENT_ID = config('AMADEUS_CLIENT_ID')
 AMADEUS_CLIENT_SECRET = config('AMADEUS_CLIENT_SECRET')
 
+# Define the Redis URL
 REDIS_URL = config('REDIS_URL')
 
+# Define the cache settings
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
