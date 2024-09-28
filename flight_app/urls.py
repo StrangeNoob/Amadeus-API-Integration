@@ -6,9 +6,9 @@ from drf_yasg import openapi
 # Define the schema view for the Swagger UI
 schema_view = get_schema_view(
     openapi.Info(
-        title="Flight API",
+        title="Flight Price API",
         default_version='v1',
-        description="API documentation for the Flight app",
+        description="API documentation for the Flight Price app",
         terms_of_service="",
         contact=openapi.Contact(email="itsprateekkumarmohanty@gmail.com"),
     ),
