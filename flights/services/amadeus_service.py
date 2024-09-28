@@ -1,6 +1,8 @@
 import requests
 from requests.exceptions import RequestException, Timeout, HTTPError
 from django.conf import settings
+from django.core.cache import cache
+
 
 class AmadeusAPI:
     def __init__(self):
@@ -11,6 +13,11 @@ class AmadeusAPI:
 
     def get_access_token(self):
         try:
+
+            cached_data = cache.get(self.token_url)
+            if cached_data:
+                return cached_data
+
             payload = {
                 'grant_type': 'client_credentials',
                 'client_id': self.client_id,
@@ -18,6 +25,7 @@ class AmadeusAPI:
             }
             response = requests.post(self.token_url, data=payload, timeout=10)  # Add timeout for the request
             response.raise_for_status()  # Raises an HTTPError for bad responses (4xx or 5xx)
+            cache.set(self.token_url, response.json().get('access_token'), timeout=60 * 30)
             return response.json().get('access_token')
         except (RequestException, Timeout, HTTPError) as e:
             print(f"Failed to retrieve access token: {e}")
